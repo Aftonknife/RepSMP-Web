@@ -1,0 +1,685 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b0a07">
+<title>RepSMP - Bedrock Minecraft Server</title>
+<meta name="description" content="RepSMP is a free Bedrock Edition Minecraft survival server. Find the server address, how to join, worlds and rules.">
+<meta property="og:title" content="RepSMP - Bedrock Minecraft Server">
+<meta property="og:description" content="A free Bedrock Edition survival server. Join from phone, tablet or PC.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%205%205'%20shape-rendering='crispEdges'%3E%3Crect%20width='5'%20height='5'%20fill='%23ffb000'/%3E%3Cpath%20fill='%230b0a07'%20d='M0%200h4v1H0zM0%201h1v1H0zM4%201h1v1H4zM0%202h4v1H0zM0%203h1v1H0zM3%203h1v1H3zM0%204h1v1H0zM4%204h1v1H4z'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Pixelify+Sans:wght@500;700&display=swap">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/*
+  Layout (forum-portal style): dark header with Play Now + copy-IP line, pixel terrain edge,
+  nav bar, then main column (news posts / pages) beside a sidebar of blocks, multi-column footer.
+  Palette: warm black header, gold accent, light or dark content area. Free fonts only.
+*/
+:root {
+  --page: #e8e8e4;
+  --block: #ffffff;
+  --bline: #d2d2c8;
+  --bline-strong: #9b9788;
+  --fg: #1a1812;
+  --muted: #5f5b4f;
+  --gold: #ffb000;
+  --gold-text: #8a5a00;
+  --on-gold: #1a1200;
+  --gold-shadow: #a06c00;
+  --head-bg: #0b0a07;
+  --head-fg: #ffffff;
+  --hdr: #0b0a07;
+  --nav: #17140c;
+  --nav-line: #2a2515;
+  --hdr-fg: #f3efe3;
+  --hdr-muted: #b3ad99;
+  --done-bg: #277a33;
+  --done-fg: #ffffff;
+
+  --font-display: 'Pixelify Sans', 'Courier New', monospace;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page: #12100b;
+    --block: #1c1912;
+    --bline: #2f2a1b;
+    --bline-strong: #5a533c;
+    --fg: #ece8dc;
+    --muted: #a8a28f;
+    --gold-text: #ffbf33;
+    --done-bg: #5cc26a;
+    --done-fg: #07200c;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page: #12100b;
+  --block: #1c1912;
+  --bline: #2f2a1b;
+  --bline-strong: #5a533c;
+  --fg: #ece8dc;
+  --muted: #a8a28f;
+  --gold-text: #ffbf33;
+  --done-bg: #5cc26a;
+  --done-fg: #07200c;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--fg); font: 400 15px/1.6 var(--font-body); -webkit-text-size-adjust: 100%; }
+h1, h2, h3, p, ol, ul, dl, dd { margin: 0; }
+a { color: var(--gold-text); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+.wrap {
+  width: 100%; max-width: 1180px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+code.val { font-family: var(--font-mono); font-weight: 700; font-size: .92em; background: var(--page); border: 1px solid var(--bline); border-radius: 3px; padding: 1px 6px; overflow-wrap: anywhere; color: var(--fg); }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 4px; border: 2px solid transparent; font: 700 15px/1 var(--font-body); text-decoration: none; cursor: pointer; }
+.btn-gold { background: var(--gold); color: var(--on-gold); border-color: var(--gold); box-shadow: 0 4px 0 var(--gold-shadow); }
+.btn-gold:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--gold-shadow); }
+.btn-line { background: transparent; color: var(--fg); border-color: var(--bline-strong); }
+.btn-line:hover { border-color: var(--fg); }
+.btn-block { width: 100%; }
+.is-done { background: var(--done-bg) !important; color: var(--done-fg) !important; border-color: var(--done-bg) !important; box-shadow: none !important; }
+
+/* header */
+.top { background: var(--hdr); color: var(--hdr-fg); }
+.top-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; padding-block: 24px 8px; }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--hdr-fg); font: 700 40px/1 var(--font-display); }
+.brand-mark { width: 44px; height: 44px; background: var(--gold); color: #0b0a07; display: grid; place-items: center; flex: none; }
+.brand-mark svg { width: 24px; height: 24px; }
+.top-cta { display: grid; gap: 6px; justify-items: end; }
+.top-line { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px 16px; color: var(--hdr-muted); font-size: 16px; }
+.top-line b { color: var(--hdr-fg); }
+.ip-btn { background: none; border: 0; padding: 6px 0; color: var(--hdr-muted); font: 500 15px/1.4 var(--font-body); cursor: pointer; text-align: right; }
+.ip-btn .ip { font-family: var(--font-mono); font-weight: 700; color: var(--gold); overflow-wrap: anywhere; }
+.ip-btn .hint { margin-left: 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.top-scene { display: block; width: 100%; height: 84px; image-rendering: pixelated; }
+@media (max-width: 720px) {
+  .brand { font-size: 34px; }
+  .top-cta { justify-items: start; }
+  .top-line { justify-content: flex-start; }
+  .ip-btn { text-align: left; }
+}
+
+/* nav */
+.nav-bar { background: var(--nav); border-top: 1px solid var(--nav-line); border-bottom: 1px solid #000; }
+.nav { display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { flex: none; padding: 14px 16px 11px; color: var(--hdr-muted); text-decoration: none; font-weight: 600; border-bottom: 3px solid transparent; }
+.nav a:hover { color: var(--hdr-fg); }
+.nav a[aria-current="page"] { color: #fff; border-bottom-color: var(--gold); }
+
+/* layout */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; padding-block: 24px 40px; align-items: start; }
+.main { min-width: 0; display: grid; gap: 20px; }
+.side { min-width: 0; display: grid; gap: 20px; }
+@media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+
+.block { background: var(--block); border: 1px solid var(--bline); border-radius: 4px; overflow: hidden; }
+.block-head { background: var(--head-bg); color: var(--head-fg); padding: 11px 16px; font: 700 15px/1.3 var(--font-body); border-bottom: 3px solid var(--gold); }
+.block-body { padding: 16px; display: grid; gap: 14px; }
+
+/* breadcrumbs and page titles */
+.crumbs { font-size: 13px; color: var(--muted); }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { text-decoration: underline; }
+.page-title { font: 700 34px/1.1 var(--font-display); margin-top: 6px; }
+.view { display: grid; gap: 20px; min-width: 0; }
+
+/* news posts */
+.post { background: var(--block); border: 1px solid var(--bline); border-radius: 4px; overflow: hidden; }
+.banner { display: block; width: 100%; height: 140px; image-rendering: pixelated; background: #1a1812; }
+.post-body { padding: 18px 20px 14px; display: grid; gap: 10px; }
+.post-date { font: 500 13px/1 var(--font-mono); color: var(--gold-text); letter-spacing: .02em; }
+.post-title { font: 700 22px/1.3 var(--font-body); text-wrap: balance; }
+.post-text, .post-more { color: var(--fg); max-width: 70ch; }
+.more-btn { justify-self: start; background: none; border: 0; padding: 4px 0; color: var(--gold-text); font: 600 14px/1.4 var(--font-body); cursor: pointer; text-decoration: underline; }
+.post-meta { font-size: 13px; color: var(--muted); border-top: 1px solid var(--bline); padding-top: 10px; }
+
+/* sidebar */
+.field { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; }
+.field + .field { padding-top: 12px; border-top: 1px solid var(--bline); }
+.field-label { grid-column: 1 / -1; font: 600 11px/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.field-val { font: 700 clamp(15px, 4.5vw, 17px)/1.3 var(--font-mono); overflow-wrap: anywhere; user-select: all; -webkit-user-select: all; }
+.copy-btn { min-height: 38px; min-width: 72px; padding: 0 12px; background: transparent; color: var(--fg); border: 2px solid var(--fg); border-radius: 4px; font: 700 13px/1 var(--font-body); cursor: pointer; }
+.note { font-size: 13px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 16px; }
+.kv dt { color: var(--muted); }
+.kv dd { text-align: right; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { display: inline-flex; align-items: center; min-height: 38px; padding: 0 14px; border: 2px solid var(--bline-strong); border-radius: 4px; color: var(--fg); text-decoration: none; font-weight: 600; }
+.chip:hover { border-color: var(--fg); }
+.mini-rules { list-style: none; padding: 0; display: grid; gap: 0; counter-reset: m; }
+.mini-rules li { counter-increment: m; padding: 9px 0; border-top: 1px solid var(--bline); display: flex; gap: 12px; align-items: baseline; font-weight: 500; }
+.mini-rules li:first-child { border-top: 0; padding-top: 0; }
+.mini-rules li::before { content: counter(m); font: 700 20px/1 var(--font-display); color: var(--gold-text); min-width: 16px; }
+.more-link { font-weight: 600; text-decoration: none; }
+.more-link:hover { text-decoration: underline; }
+
+/* join steps */
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.tab { min-height: 42px; padding: 0 16px; background: transparent; color: var(--fg); border: 2px solid var(--bline-strong); border-radius: 4px; font: 600 14px/1 var(--font-body); cursor: pointer; }
+.tab[aria-selected="true"] { background: var(--head-bg); color: #fff; border-color: var(--head-bg); box-shadow: inset 0 -3px 0 var(--gold); }
+.steps { list-style: none; padding: 0; display: grid; counter-reset: s; max-width: 720px; }
+.steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--bline); align-items: baseline; counter-increment: s; }
+.steps li::before { content: counter(s); font: 700 28px/1 var(--font-display); color: var(--gold-text); }
+.callouts { display: grid; gap: 8px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--bline); padding-top: 14px; }
+.callouts strong { color: var(--fg); }
+
+/* worlds */
+.world-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; }
+.world .banner { height: 100px; }
+.world .post-body { padding: 14px 16px 16px; gap: 6px; }
+.world h3 { font: 700 20px/1.3 var(--font-body); }
+.world p { color: var(--muted); font-size: 14px; }
+
+/* rules and about */
+.rule-list { list-style: none; padding: 0; display: grid; counter-reset: r; }
+.rule-list li { counter-increment: r; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 2px 12px; padding: 14px 0; border-top: 1px solid var(--bline); }
+.rule-list li:first-child { border-top: 0; padding-top: 0; }
+.rule-list li::before { content: counter(r); grid-row: span 2; font: 700 26px/1 var(--font-display); color: var(--gold-text); }
+.rule-list h3 { font: 700 16px/1.3 var(--font-body); }
+.rule-list p { color: var(--muted); font-size: 14px; }
+.about-text { max-width: 66ch; font-size: 16px; }
+.features { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 28px; }
+.feature { border-top: 2px solid var(--head-bg); padding: 14px 0 20px; display: grid; gap: 4px; align-content: start; }
+.feature h3 { font: 700 17px/1.3 var(--font-body); }
+.feature p { color: var(--muted); font-size: 14px; }
+@media (max-width: 520px) { .features { grid-template-columns: minmax(0, 1fr); } }
+
+/* footer */
+.site-footer { background: var(--hdr); color: var(--hdr-fg); border-top: 3px solid var(--gold); }
+.foot-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 32px; padding-block: 36px; }
+.foot-cols h3 { font: 700 16px/1.3 var(--font-body); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--nav-line); }
+.foot-cols p { color: var(--hdr-muted); font-size: 14px; }
+.foot-links { list-style: none; padding: 0; display: grid; gap: 2px; }
+.foot-links a { color: var(--hdr-fg); text-decoration: none; display: inline-block; padding: 5px 0; }
+.foot-links a:hover { color: var(--gold); text-decoration: underline; }
+.foot-bottom { border-top: 1px solid var(--nav-line); padding-block: 16px; color: var(--hdr-muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#home" aria-label="RepSMP home">
+      <span class="brand-mark"><svg viewBox="0 0 5 5" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h4v1H0zM0 1h1v1H0zM4 1h1v1H4zM0 2h4v1H0zM0 3h1v1H0zM3 3h1v1H3zM0 4h1v1H0zM4 4h1v1H4z"/></svg></span>
+      <span data-cfg="name"></span>
+    </a>
+    <div class="top-cta">
+      <div class="top-line"><span data-cfg="headerTag"></span> <a class="btn btn-gold" href="#join">Play Now</a></div>
+      <button class="ip-btn" id="ipCopy" type="button" aria-label="Copy server address">Server IP » <span class="ip" data-cfg="address"></span> <span class="hint" id="ipHint">Click to Copy!</span></button>
+    </div>
+  </div>
+  <canvas class="top-scene" id="topScene" data-scene="header" data-seed="3" aria-hidden="true"></canvas>
+</div>
+<div class="nav-bar"><div class="wrap"><nav class="nav" id="nav" aria-label="Main"></nav></div></div>
+
+<div class="page">
+  <div class="wrap layout">
+    <main class="main">
+
+      <section class="view" data-view="home" id="v-home">
+        <div class="view" id="newsList"></div>
+      </section>
+
+      <section class="view" data-view="join" id="v-join" hidden>
+        <div>
+          <p class="crumbs"><a href="#home">Home</a> › How to join</p>
+          <h1 class="page-title">How to join</h1>
+        </div>
+        <div class="block">
+          <div class="block-head">Pick your device</div>
+          <div class="block-body">
+            <div class="tabs" id="tabs" role="tablist" aria-label="Device"></div>
+            <div id="panels"></div>
+            <div class="callouts" id="callouts"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="worlds" id="v-worlds" hidden>
+        <div>
+          <p class="crumbs"><a href="#home">Home</a> › Worlds</p>
+          <h1 class="page-title">Worlds</h1>
+        </div>
+        <div class="world-grid" id="worldGrid"></div>
+      </section>
+
+      <section class="view" data-view="rules" id="v-rules" hidden>
+        <div>
+          <p class="crumbs"><a href="#home">Home</a> › Rules</p>
+          <h1 class="page-title">Rules</h1>
+        </div>
+        <div class="block">
+          <div class="block-head">Server rules</div>
+          <div class="block-body">
+            <p class="note">Most things are fair game on RepSMP. These are the limits.</p>
+            <ol class="rule-list" id="ruleList"></ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="about" id="v-about" hidden>
+        <div>
+          <p class="crumbs"><a href="#home">Home</a> › About</p>
+          <h1 class="page-title" data-cfg="aboutTitle"></h1>
+        </div>
+        <div class="block">
+          <div class="block-head">What is it?</div>
+          <div class="block-body">
+            <p class="about-text" data-cfg="aboutText"></p>
+            <div class="features" id="features"></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <aside class="side" aria-label="Sidebar">
+      <div class="block">
+        <div class="block-head">Join RepSMP</div>
+        <div class="block-body">
+          <div class="field">
+            <span class="field-label">Address</span>
+            <span class="field-val" data-cfg="address"></span>
+            <button class="copy-btn" type="button" data-copy="address">Copy</button>
+          </div>
+          <div class="field">
+            <span class="field-label">Port</span>
+            <span class="field-val" data-cfg="port"></span>
+            <button class="copy-btn" type="button" data-copy="port">Copy</button>
+          </div>
+          <a class="btn btn-gold btn-block" href="#join">How to join</a>
+          <p class="note" id="sleepNote"></p>
+        </div>
+      </div>
+
+      <div class="block" id="socialBlock">
+        <div class="block-head">Social Media</div>
+        <div class="block-body"><div class="chips" id="socialChips"></div></div>
+      </div>
+
+      <div class="block">
+        <div class="block-head">Server Info</div>
+        <div class="block-body"><dl class="kv" id="infoList"></dl></div>
+      </div>
+
+      <div class="block" id="miniRulesBlock">
+        <div class="block-head">Rules</div>
+        <div class="block-body">
+          <ol class="mini-rules" id="miniRules"></ol>
+          <a class="more-link" href="#rules">Read all rules »</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap foot-cols">
+    <div>
+      <h3>About Us</h3>
+      <p data-cfg="footAbout"></p>
+    </div>
+    <div>
+      <h3>Useful Links</h3>
+      <ul class="foot-links" id="footLinks"></ul>
+    </div>
+    <div>
+      <h3>Free to play</h3>
+      <p data-cfg="freeNote"></p>
+    </div>
+  </div>
+  <div class="foot-bottom"><div class="wrap" id="fine"></div></div>
+</footer>
+
+<script>
+/* ==========================================================================
+   EDIT HERE. Everything on the page comes from this block.
+   - Leave a link as "" and its button disappears.
+   - Empty a list (news, worlds, rules) and that page or block hides.
+   - In step text, {address}, {port} and {name} fill in automatically.
+   - Scenes for banners: "dawn", "night" or "cave".
+   ========================================================================== */
+const CONFIG = {
+  name: "RepSMP",
+  edition: "Bedrock Edition",
+  headerTag: "Free to join on Bedrock Edition!",
+  team: "RepSMP Team",
+
+  /* Server details. Copy these exactly from your Aternos page. */
+  address: "repsmp.aternos.me",
+  port: "19132",
+
+  /* Community links. Leave "" to hide. */
+  links: {
+    discord: "",
+    youtube: "",
+    tiktok: "",
+    instagram: ""
+  },
+
+  /* Console players need a free workaround to add a custom server. */
+  consoleHelpUrl: "https://github.com/Pugmatt/BedrockConnect",
+
+  aboutTitle: "About RepSMP",
+  aboutText: "RepSMP is a community-run survival server for Minecraft Bedrock Edition. It is free to join and free to play, and everyone starts on equal ground.",
+  footAbout: "RepSMP is a community-run survival server for Minecraft Bedrock Edition, hosted on Aternos.",
+  freeNote: "No paid ranks, no store and no pay-to-win. Just a shared world to build in.",
+
+  serverInfo: [
+    ["Edition", "Bedrock"],
+    ["Hosting", "Aternos"],
+    ["Cost", "Free"],
+    ["Java Edition", "Not supported"],
+    ["Griefing", "Allowed unless staff say no"]
+  ],
+
+  features: [
+    { title: "Bedrock only", text: "Join from a phone, tablet or Windows PC. Consoles can join with a free workaround." },
+    { title: "Free to play", text: "No paid ranks and no pay-to-win. Nothing to buy." },
+    { title: "Survival with friends", text: "One shared world. Build, trade and explore together." },
+    { title: "Runs on demand", text: "Hosted on Aternos, so the server sleeps when nobody is on. Ask for a start if it is offline." }
+  ],
+
+  platforms: [
+    {
+      id: "mobile",
+      label: "Phone · Tablet · PC",
+      steps: [
+        "Open Minecraft (Bedrock Edition) and tap Play.",
+        "Open the Servers tab, scroll down and tap Add Server.",
+        "Set Server Name to {name}, Server Address to {address} and Port to {port}.",
+        "Tap Save, then tap {name} in your server list and choose Join Server."
+      ]
+    },
+    {
+      id: "console",
+      label: "Xbox · PlayStation · Switch",
+      steps: [
+        "Consoles cannot add a custom server directly, so you need a free workaround. The most common one is BedrockConnect.",
+        "Follow the BedrockConnect guide for your console. It changes one DNS setting.",
+        "Open Minecraft, go to Play, then Servers, and join one of the Featured Servers. A menu opens.",
+        "Choose the option to connect to a server, enter {address} and port {port}, and join."
+      ],
+      help: { label: "BedrockConnect guide", key: "consoleHelpUrl" }
+    }
+  ],
+
+  worlds: [
+    { tag: "Main world", title: "Survival", text: "Gather, build and survive together in the shared overworld.", scene: "dawn" },
+    { tag: "Shared builds", title: "Community builds", text: "Projects everyone can visit, add to and use.", scene: "night" },
+    { tag: "Coming up", title: "Events", text: "Contests and challenges, posted in News when they happen.", scene: "cave" }
+  ],
+
+  news: [
+    {
+      date: "2026-11-15", scene: "dawn",
+      title: "The RepSMP website is live",
+      text: "The server address, join steps and rules are all in one place now. Bookmark it and share it with friends.",
+      more: "Open How to join for the steps on your device, or copy the address and port from the Join RepSMP box and add the server in Minecraft."
+    },
+    {
+      date: "2026-11-15", scene: "night",
+      title: "RepSMP is Bedrock only",
+      text: "The server runs on Bedrock Edition, so Java Edition players cannot connect. Phones, tablets and Windows PCs work out of the box.",
+      more: "Console players can join too, but they need a free workaround called BedrockConnect. The steps are on the How to join page."
+    }
+  ],
+
+  rules: [
+    { title: "Griefing and stealing are allowed", text: "Griefing, stealing and raiding are fair game unless a staff member says no." },
+    { title: "No cheating", text: "No hacked clients, x-ray, duplication glitches or other unfair advantages." },
+    { title: "Respect everyone", text: "No harassment, hate or toxic behaviour in chat or in the world." },
+    { title: "No spam or ads", text: "Keep chat readable and do not advertise other servers." },
+    { title: "Keep it lag-free", text: "No giant redstone clocks or mob farms that slow the server for everyone." },
+    { title: "Staff have the final say", text: "If a staff member says no, that is the end of it. Stop straight away and appeal calmly afterwards." }
+  ]
+};
+/* ======================== end of editable block ======================== */
+
+(function () {
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const C = CONFIG;
+
+  function h(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function rich(parent, str) {
+    str.split(/(\{\w+\})/).forEach(function (part) {
+      const m = part.match(/^\{(\w+)\}$/);
+      if (m && C[m[1]] != null) parent.appendChild(h('code', 'val', C[m[1]]));
+      else if (part) parent.appendChild(document.createTextNode(part));
+    });
+  }
+  function ext(label, url, cls) {
+    const a = h('a', cls, label);
+    a.href = url; a.target = '_blank'; a.rel = 'noopener noreferrer';
+    return a;
+  }
+
+  $$('[data-cfg]').forEach(function (n) { n.textContent = C[n.dataset.cfg] != null ? C[n.dataset.cfg] : ''; });
+
+  const hasDiscord = !!C.links.discord;
+  const wake = hasDiscord ? 'ask in the Discord and someone will start it.' : 'ask the server owner to start it.';
+  $('#sleepNote').textContent = 'Hosted on Aternos, so the server sleeps when nobody is on. If you cannot connect, ' + wake;
+
+  /* ---------- news ---------- */
+  const fmtDate = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  const newsList = $('#newsList');
+  C.news.forEach(function (n, i) {
+    const art = h('article', 'post');
+    const cv = h('canvas', 'banner'); cv.dataset.scene = n.scene || 'dawn'; cv.dataset.seed = String(i + 1); cv.setAttribute('aria-hidden', 'true');
+    const body = h('div', 'post-body');
+    const t = h('time', 'post-date', fmtDate.format(new Date(n.date + 'T12:00:00'))); t.dateTime = n.date;
+    body.appendChild(t);
+    body.appendChild(h('h2', 'post-title', n.title));
+    body.appendChild(h('p', 'post-text', n.text));
+    if (n.more) {
+      const more = h('p', 'post-more', n.more); more.hidden = true; more.id = 'more-' + i;
+      const b = h('button', 'more-btn', 'Continue reading...'); b.type = 'button';
+      b.setAttribute('aria-expanded', 'false'); b.setAttribute('aria-controls', more.id);
+      b.addEventListener('click', function () {
+        const open = more.hidden; more.hidden = !open;
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        b.textContent = open ? 'Show less' : 'Continue reading...';
+      });
+      body.appendChild(more); body.appendChild(b);
+    }
+    body.appendChild(h('p', 'post-meta', 'Posted by ' + (n.author || C.team)));
+    art.appendChild(cv); art.appendChild(body); newsList.appendChild(art);
+  });
+  if (!C.news.length) {
+    const b = h('div', 'block'); b.appendChild(h('div', 'block-head', 'News'));
+    const bb = h('div', 'block-body'); bb.appendChild(h('p', null, 'No news yet. Check back soon.')); b.appendChild(bb); newsList.appendChild(b);
+  }
+
+  /* ---------- join tabs ---------- */
+  const tabs = $('#tabs'), panels = $('#panels');
+  C.platforms.forEach(function (p, i) {
+    const b = h('button', 'tab', p.label);
+    b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'tab-' + p.id;
+    b.setAttribute('aria-controls', 'panel-' + p.id);
+    b.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); b.tabIndex = i === 0 ? 0 : -1;
+    tabs.appendChild(b);
+    const panel = h('div'); panel.id = 'panel-' + p.id; panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', b.id); panel.hidden = i !== 0;
+    const ol = h('ol', 'steps');
+    p.steps.forEach(function (s) { const li = h('li'); const sp = h('span'); rich(sp, s); li.appendChild(sp); ol.appendChild(li); });
+    panel.appendChild(ol);
+    if (p.help && C[p.help.key]) { const w = h('div'); w.style.marginTop = '8px'; w.appendChild(ext(p.help.label, C[p.help.key], 'btn btn-line')); panel.appendChild(w); }
+    panels.appendChild(panel);
+  });
+  function selectTab(i, focus) {
+    $$('.tab', tabs).forEach(function (b, j) { b.setAttribute('aria-selected', j === i ? 'true' : 'false'); b.tabIndex = j === i ? 0 : -1; if (j === i && focus) b.focus(); });
+    $$('[role="tabpanel"]', panels).forEach(function (p, j) { p.hidden = j !== i; });
+  }
+  tabs.addEventListener('click', function (e) { const b = e.target.closest('.tab'); if (b) selectTab($$('.tab', tabs).indexOf(b)); });
+  tabs.addEventListener('keydown', function (e) {
+    const list = $$('.tab', tabs), cur = list.indexOf(document.activeElement); if (cur < 0) return;
+    if (e.key === 'ArrowRight') { e.preventDefault(); selectTab((cur + 1) % list.length, true); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); selectTab((cur - 1 + list.length) % list.length, true); }
+  });
+  [['Bedrock only. ', 'Java Edition cannot connect to ' + C.name + '.'], ['Server asleep? ', wake.charAt(0).toUpperCase() + wake.slice(1)]].forEach(function (c) {
+    const p = h('p'); p.appendChild(h('strong', null, c[0])); p.appendChild(document.createTextNode(c[1])); $('#callouts').appendChild(p);
+  });
+
+  /* ---------- worlds ---------- */
+  C.worlds.forEach(function (w, i) {
+    const c = h('article', 'post world');
+    const cv = h('canvas', 'banner'); cv.dataset.scene = w.scene || 'dawn'; cv.dataset.seed = String(i + 11); cv.dataset.rows = '8'; cv.setAttribute('aria-hidden', 'true');
+    const b = h('div', 'post-body');
+    b.appendChild(h('span', 'post-date', w.tag)); b.appendChild(h('h3', null, w.title)); b.appendChild(h('p', null, w.text));
+    c.appendChild(cv); c.appendChild(b); $('#worldGrid').appendChild(c);
+  });
+
+  /* ---------- rules ---------- */
+  C.rules.forEach(function (r) { const li = h('li'); li.appendChild(h('h3', null, r.title)); li.appendChild(h('p', null, r.text)); $('#ruleList').appendChild(li); });
+  C.rules.slice(0, 3).forEach(function (r) { $('#miniRules').appendChild(h('li', null, r.title)); });
+  if (!C.rules.length) $('#miniRulesBlock').hidden = true;
+
+  /* ---------- about, info, social ---------- */
+  C.features.forEach(function (f) { const d = h('div', 'feature'); d.appendChild(h('h3', null, f.title)); d.appendChild(h('p', null, f.text)); $('#features').appendChild(d); });
+  C.serverInfo.forEach(function (r) { $('#infoList').appendChild(h('dt', null, r[0])); $('#infoList').appendChild(h('dd', null, r[1])); });
+  const socials = [['discord', 'Discord'], ['youtube', 'YouTube'], ['tiktok', 'TikTok'], ['instagram', 'Instagram']];
+  const socialLinks = socials.filter(function (s) { return !!C.links[s[0]]; });
+  socialLinks.forEach(function (s) { $('#socialChips').appendChild(ext(s[1], C.links[s[0]], 'chip')); });
+  if (!socialLinks.length) $('#socialBlock').hidden = true;
+
+  /* ---------- views, nav, footer ---------- */
+  const defs = [['home', 'Home', true], ['join', 'How to join', true], ['worlds', 'Worlds', C.worlds.length > 0],
+                ['rules', 'Rules', C.rules.length > 0], ['about', 'About', true]];
+  const active = defs.filter(function (d) { return d[2]; }).map(function (d) { return d[0]; });
+  defs.forEach(function (d) { if (!d[2]) $('#v-' + d[0]).remove(); });
+  const nav = $('#nav'), foot = $('#footLinks');
+  defs.forEach(function (d) {
+    if (!d[2]) return;
+    const a = h('a', null, d[1]); a.href = '#' + d[0]; a.dataset.view = d[0]; nav.appendChild(a);
+    const li = h('li'); const fa = h('a', null, d[1]); fa.href = '#' + d[0]; li.appendChild(fa); foot.appendChild(li);
+  });
+  if (hasDiscord) {
+    nav.appendChild(ext('Discord', C.links.discord, ''));
+    const li = h('li'); li.appendChild(ext('Discord', C.links.discord, '')); foot.appendChild(li);
+  }
+  $('#fine').textContent = 'Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft. Hosted on Aternos. © ' + new Date().getFullYear() + ' ' + C.name + '.';
+
+  function route() {
+    let k = location.hash.replace('#', '');
+    if (active.indexOf(k) < 0) k = 'home';
+    $$('.view[data-view]').forEach(function (v) { v.hidden = v.dataset.view !== k; });
+    $$('a[data-view]', nav).forEach(function (a) { if (a.dataset.view === k) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    try { window.scrollTo(0, 0); } catch (e) {}
+    requestAnimationFrame(drawAll);
+  }
+
+  /* ---------- copy ---------- */
+  function legacyCopy(text) {
+    try {
+      const ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', '');
+      ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, text.length);
+      const ok = document.execCommand('copy'); ta.remove(); return ok;
+    } catch (e) { return false; }
+  }
+  function selectNode(node) { try { const r = document.createRange(); r.selectNodeContents(node); const s = getSelection(); s.removeAllRanges(); s.addRange(r); } catch (e) {} }
+  async function copyText(text, node) {
+    let ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) { ok = legacyCopy(text); }
+    if (!ok && node) selectNode(node);
+    return ok;
+  }
+  $$('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', async function () {
+      const ok = await copyText(C[b.dataset.copy], b.closest('.field').querySelector('.field-val'));
+      b.textContent = ok ? 'Copied' : 'Hold to copy'; b.classList.toggle('is-done', ok);
+      clearTimeout(b._t); b._t = setTimeout(function () { b.textContent = 'Copy'; b.classList.remove('is-done'); }, 1800);
+    });
+  });
+  const ipBtn = $('#ipCopy'), ipHint = $('#ipHint');
+  ipBtn.addEventListener('click', async function () {
+    const ok = await copyText(C.address, $('.ip', ipBtn));
+    ipHint.textContent = ok ? 'Copied!' : 'Hold to copy';
+    clearTimeout(ipBtn._t); ipBtn._t = setTimeout(function () { ipHint.textContent = 'Click to Copy!'; }, 1800);
+  });
+
+  /* ---------- pixel scenes ---------- */
+  const PAL = { grass: '#4f9a3a', dirt: '#7a5230', ore: '#ffb000', diamond: '#4de3d1' };
+  const SCENES = {
+    header: { rows: 6, base: 3, stars: true, starRows: 3, torches: true, stone: ['#17140c', '#1e1a10'] },
+    dawn:   { rows: 10, base: 6, sky: ['#f2a65a', '#ffe3b0'], sun: { x: 0.72, y: 1, color: '#fff4c2' }, stone: ['#6f6c61', '#64615a'], torches: true },
+    night:  { rows: 10, base: 6, sky: ['#0b1530', '#27407a'], stars: true, starRows: 4, sun: { x: 0.2, y: 1, color: '#e8ecf5' }, stone: ['#5d5a52', '#54514a'], torches: true },
+    cave:   { rows: 10, base: 6, sky: ['#16140f', '#2b281f'], stone: ['#55524a', '#4b4841'], torches: true }
+  };
+  function hash(x, y) { const n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return n - Math.floor(n); }
+  function scene(canvas) {
+    const o = SCENES[canvas.dataset.scene]; if (!o) return;
+    const w = canvas.clientWidth; if (!w) return;
+    const seed = +canvas.dataset.seed || 1;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const cell = w < 520 ? 10 : 14;
+    const rows = +canvas.dataset.rows || o.rows, hh = rows * cell;
+    const base = Math.round(rows * (o.base / o.rows));
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(hh * dpr); canvas.style.height = hh + 'px';
+    const g = canvas.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, hh);
+    const cols = Math.ceil(w / cell);
+    if (o.sky) { const gr = g.createLinearGradient(0, 0, 0, hh); gr.addColorStop(0, o.sky[0]); gr.addColorStop(1, o.sky[1]); g.fillStyle = gr; g.fillRect(0, 0, w, hh); }
+    if (o.stars) {
+      g.fillStyle = 'rgba(255,255,255,0.8)';
+      for (let i = 0; i < cols * 0.7; i++) g.fillRect(Math.floor(hash(i + seed, 1) * cols) * cell + cell / 2 - 1, Math.floor(hash(i + seed, 2) * (o.starRows || 3)) * cell + cell / 2 - 1, 2, 2);
+    }
+    if (o.sun) {
+      const sx = Math.round(o.sun.x * cols) * cell, sy = o.sun.y * cell;
+      g.fillStyle = 'rgba(255,255,255,0.22)'; g.fillRect(sx - cell, sy - cell, cell * 5, cell * 5);
+      g.fillStyle = o.sun.color; g.fillRect(sx, sy, cell * 3, cell * 3);
+    }
+    for (let x = 0; x < cols; x++) {
+      const t = Math.max(1, Math.min(rows - 3, base + Math.round(1.5 * Math.sin(x * 0.2 + seed * 3) + 1.0 * Math.sin(x * 0.55 + seed * 7))));
+      for (let y = t; y < rows; y++) {
+        const px = x * cell, py = y * cell;
+        if (y === t) g.fillStyle = PAL.grass;
+        else if (y === t + 1 || (y === t + 2 && hash(x + seed, 3) > 0.55)) g.fillStyle = PAL.dirt;
+        else g.fillStyle = hash(x + seed, y) > 0.5 ? o.stone[0] : o.stone[1];
+        g.fillRect(px, py, cell, cell);
+        if (y === t) { g.fillStyle = 'rgba(255,255,255,0.16)'; g.fillRect(px, py, cell, Math.max(2, cell * 0.2)); }
+        if (y > t + 1) {
+          const r = hash(x + seed, y + 99);
+          if (r > 0.93) {
+            g.fillStyle = r > 0.985 ? PAL.diamond : PAL.ore; const s = Math.round(cell * 0.28);
+            g.fillRect(px + cell * 0.2, py + cell * 0.2, s, s); g.fillRect(px + cell * 0.55, py + cell * 0.5, s, s);
+          }
+        }
+      }
+      if (o.torches && hash(x + seed, 7) > 0.955) {
+        const px = x * cell, py = (t - 1) * cell;
+        g.fillStyle = PAL.dirt; g.fillRect(px + cell * 0.42, py + cell * 0.38, cell * 0.16, cell * 0.62);
+        g.fillStyle = PAL.ore; g.fillRect(px + cell * 0.34, py + cell * 0.06, cell * 0.32, cell * 0.34);
+      }
+    }
+  }
+  function drawAll() { $$('canvas[data-scene]').forEach(function (c) { if (c.clientWidth) scene(c); }); }
+  let lastW = 0;
+  if (window.ResizeObserver) new ResizeObserver(function () { const w = document.body.clientWidth; if (w !== lastW) { lastW = w; drawAll(); } }).observe(document.body);
+  else window.addEventListener('resize', drawAll);
+
+  window.addEventListener('hashchange', route);
+  route();
+})();
+</script>
+</body>
+</html>
